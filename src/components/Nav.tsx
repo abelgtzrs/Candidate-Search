@@ -7,10 +7,13 @@ const Nav: FC = () => {
       <h1>Candidate Search</h1>
       <ul>
         <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
           <Link to="/">Search Candidates</Link>
         </li>
         <li>
-          <Link to="/saved">Saved Candidates</Link>
+          <Link to="/SavedCandidates">Saved Candidates</Link>
         </li>
       </ul>
     </nav>
