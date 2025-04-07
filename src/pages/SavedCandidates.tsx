@@ -31,7 +31,7 @@ const SavedCandidates = () => {
       {candidates.map((candidate) => (
         <div key={candidate.login} style={{ marginBottom: "1rem" }}>
           <img
-            src={candidate.avatar_url}
+            src={candidate.avatar_url || ""}
             alt={`${candidate.login} avatar`}
             width="50"
             height="50"
