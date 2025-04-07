@@ -67,7 +67,7 @@ This project is a React + TypeScript application that allows employers to browse
 - **Detailed API Fetch**: Fetches full profile info for each candidate (avatar, bio, etc.).
 - **Accept/Reject Flow**: Simple UI for saving or discarding candidates.
 - **Local Storage Persistence**: Saves data across reloads.
-- **Saved Candidates Table**: Displays accepted candidates in a striped (zebra) table, complete with images, profile links, and a remove option.
+- **Saved Candidates Table**: Displays accepted candidates in a table, complete with images, profile links, and a remove option.
 
 ## Deployed Link
 
@@ -75,8 +75,8 @@ This project is a React + TypeScript application that allows employers to browse
 
 ## Screenshot
 
-![Candidate Search](https://imgur.com/PSntXv3)
-![Potential Candidates](https://imgur.com/t0O43tD)
+![Candidate Search](https://i.imgur.com/PSntXv3_d.webp)
+![Potential Candidates](https://i.imgur.com/t0O43tD.png)
 
 ## License
 
