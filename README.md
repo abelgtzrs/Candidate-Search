@@ -1,33 +1,89 @@
-# React + TypeScript + Vite
+# Candidate Search Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+This project is a React + TypeScript application that allows employers to browse random GitHub users as potential candidates for open positions. Users can accept or reject candidates, and accepted candidates are stored and displayed on a separate page. The application is built with Vite, retrieves user info with the GitHub API, and persists data in local storage.
 
-* [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md), which uses [Babel](https://babeljs.io/) for Fast Refresh
-* [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc), which uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
 
-## Expanding the ESLint configuration
+1. [Installation](#installation)
+2. [Usage](#usage)
+3. [Features](#features)
+4. [Deployed Link](#deployed-link)
+5. [Screenshot](#screenshot)
+6. [License](#license)
+7. [Contributors and Questions](#contributors-and-questions)
 
-If you're developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Installation
 
-* Configure the top-level `parserOptions` property as follows:
+1. **Clone the Repo**
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+   ```bash
+   git clone https://github.com/your-username/candidate-search.git
+   cd candidate-search
+   ```
 
-* Replace `plugin:@typescript-eslint/recommended` with `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`.
-* Optionally, add `plugin:@typescript-eslint/stylistic-type-checked`.
-* Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` and `plugin:react/jsx-runtime` to the `extends` list.
+2. **Install Dependencies**
 
----
-© 2024 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
+   ```bash
+   npm install
+   ```
+
+   This will install all required packages, including React, TypeScript, and React Router.
+
+3. **Set Up Environment Variables**
+
+   - Create a file named `.env` in the project root (or the appropriate environment folder if your Vite config is set to load from there).
+   - Add your GitHub personal access token (fine-grained or classic) to `.env`:
+     ```bash
+     VITE_GITHUB_TOKEN=your_github_token_here
+     ```
+   - **Important**: Ensure the `.env` file is in `.gitignore` so your token is never committed to source control.
+
+4. **Run the Development Server**
+   ```bash
+   npm run dev
+   ```
+   By default, the app is served at `http://localhost:5173/` (or the port shown in your console).
+
+## Usage
+
+1. **Home / Candidate Search**
+
+   - On load, the application fetches a list of random GitHub users.
+   - It displays one candidate at a time in a visually appealing “card” format with a large profile picture, basic user info (Name, Username, Location, Email, Company, Bio), and action buttons.
+   - Click the **plus (+) button** to “accept” a candidate. This saves the candidate to local storage and moves on to the next candidate.
+   - Click the **minus (-) button** to “reject” a candidate and move on without saving.
+
+2. **Saved Candidates**
+   - Navigate to the “Saved Candidates” page (via the navbar).
+   - This page displays accepted candidates in a table format, including columns for Image, Name/Username, Location, Email, Company, and Bio.
+   - Each row also has a minus button in a red circle to remove the candidate from the list if desired.
+   - Data persists between page reloads using local storage.
+
+## Features
+
+- **Random Candidate Fetch**: Uses GitHub API to retrieve random sets of users.
+- **Detailed API Fetch**: Fetches full profile info for each candidate (avatar, bio, etc.).
+- **Accept/Reject Flow**: Simple UI for saving or discarding candidates.
+- **Local Storage Persistence**: Saves data across reloads.
+- **Saved Candidates Table**: Displays accepted candidates in a striped (zebra) table, complete with images, profile links, and a remove option.
+
+## Deployed Link
+
+- [Candidate Search on Render](https://candidate-search-fjkq.onrender.com/)
+
+## Screenshot
+
+![Candidate Search](https://imgur.com/PSntXv3)
+![Potential Candidates](https://imgur.com/t0O43tD)
+
+## License
+
+Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+You are free to modify and distribute this software under the terms of the MIT license.
+
+## Contributors and Questions
+
+- [Abel Gutierrez](https://github.com/abelgtzrs)
+- **Contact**: If you have questions, reach out via GitHub issues or email: [abelgtzrs](mailto:abelgtzrs@example.com)
