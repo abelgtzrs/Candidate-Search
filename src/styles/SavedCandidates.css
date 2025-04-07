@@ -1,0 +1,53 @@
+/* src/pages/SavedCandidates.css */
+
+/* Table styling */
+.candidate-table {
+  width: 90%;
+  margin: 1rem auto;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: Arial, sans-serif;
+}
+
+.candidate-table thead {
+  background-color: #222;
+  color: #fff;
+}
+
+.candidate-table th,
+.candidate-table td {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+}
+
+/* Zebra striping: odd rows black, even rows gray */
+.candidate-table tbody tr:nth-child(odd) {
+  background-color: #333;
+  color: #fff;
+}
+
+.candidate-table tbody tr:nth-child(even) {
+  background-color: #696969;
+  color: #ffffff;
+}
+
+/* Red circle button for rejection (minus) */
+.reject-button {
+  display: flex; /* use flex for centering vertically & horizontally */
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background-color: red;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+}
+
+.reject-button:hover {
+  opacity: 0.8;
+}
