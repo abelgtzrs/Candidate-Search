@@ -1,47 +1,48 @@
+// src/pages/CandidateSearch.tsx
 import { useState, useEffect } from "react";
 import { searchGithub, searchGithubUser } from "../api/API";
 import { ICandidate } from "../interfaces/Candidate.interface";
+import "../styles/CandidateSearch.css";
 
 const CandidateSearch = () => {
-  //Holds list of minimal user objects from searchGithub
   const [randomUsers, setRandomUsers] = useState<Array<{ login: string }>>([]);
-  //Index of the displayed user in randomusers
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  //Candidate fetched by seatchGithubUser
   const [candidate, setCandidate] = useState<ICandidate | null>(null);
-  //Loading state
   const [loading, setLoading] = useState<boolean>(true);
-  //Store accepted candidates
+
+  // Retrieve saved candidates from local storage
   const [savedCandidates, setSavedCandidates] = useState<ICandidate[]>(() => {
     const saved = localStorage.getItem("savedCandidates");
     return saved ? JSON.parse(saved) : [];
   });
 
-  //Fetch a batch of random users
+  // On mount, fetch a batch of random GitHub users
   useEffect(() => {
-    const fetchRandomUser = async () => {
+    const fetchRandomUsers = async () => {
       setLoading(true);
       const users = await searchGithub();
       setRandomUsers(users);
       setLoading(false);
     };
-    fetchRandomUser();
+    fetchRandomUsers();
   }, []);
 
+  // Whenever randomUsers or currentIndex changes, fetch details for the current user
   useEffect(() => {
     if (randomUsers.length > 0 && currentIndex < randomUsers.length) {
-      const currentLogin = randomUsers[currentIndex].login;
-      fetchCandidateDetails(currentLogin);
+      fetchCandidateDetails(randomUsers[currentIndex].login);
     } else {
       setCandidate(null);
     }
   }, [randomUsers, currentIndex]);
 
+  // Fetch detailed info for a single user
   const fetchCandidateDetails = async (username: string) => {
     try {
       setLoading(true);
       const data = await searchGithubUser(username);
 
+      // If user not found, skip to next
       if (!data || data.message === "Not Found") {
         setCurrentIndex((prevIndex) => prevIndex + 1);
         return;
@@ -50,12 +51,14 @@ const CandidateSearch = () => {
       setCandidate(data);
     } catch (error) {
       console.error("Error fetching candidate details:", error);
+      // skip to next user on error
       setCurrentIndex((prevIndex) => prevIndex + 1);
     } finally {
       setLoading(false);
     }
   };
 
+  // Accept (save) candidate, move to next
   const handleAccept = () => {
     if (!candidate) return;
     const updated = [...savedCandidates, candidate];
@@ -64,13 +67,16 @@ const CandidateSearch = () => {
     setCurrentIndex((prevIndex) => prevIndex + 1);
   };
 
+  // Reject (don’t save) candidate, move to next
   const handleReject = () => {
     setCurrentIndex((prevIndex) => prevIndex + 1);
   };
+
   if (loading) {
     return <h2>Loading candidate...</h2>;
   }
 
+  // No more random users left
   if (!candidate && currentIndex >= randomUsers.length) {
     return <h2>No more candidates available.</h2>;
   }
@@ -79,42 +85,47 @@ const CandidateSearch = () => {
     return <h2>Loading candidate...</h2>;
   }
 
+  // Render the candidate info in a "card" style
   return (
-    <div>
-      <h1>CandidateSearch</h1>
-      <div>
+    <div className="candidate-card">
+      {/* Top: Large profile picture */}
+      <div className="card-image-container">
         <img
           src={candidate.avatar_url || ""}
           alt={`${candidate.login} avatar`}
-          width="100"
-          height="100"
+          className="card-image"
         />
       </div>
-      <p>
-        <strong>Name:</strong> {candidate.name || "N/A"}
-      </p>
-      <p>
-        <strong>Username:</strong> {candidate.login}
-      </p>
-      <p>
-        <strong>Location:</strong> {candidate.location || "N/A"}
-      </p>
-      <p>
-        <strong>Company:</strong> {candidate.company || "N/A"}
-      </p>
-      <p>
-        <strong>Email:</strong> {candidate.email || "N/A"}
-      </p>
-      <p>
-        <strong>Profile:</strong>{" "}
-        <a href={candidate.html_url} target="_blank" rel="noopener noreferrer">
-          {candidate.html_url}
-        </a>
-      </p>
 
-      <div>
-        <button onClick={handleAccept}>+</button>
-        <button onClick={handleReject}>-</button>
+      {/* Middle: Primary info (big text), secondary info (small text) */}
+      <div className="card-body">
+        <h2 className="candidate-name">{candidate.name || "N/A"}</h2>
+        <h3 className="candidate-username">{candidate.login}</h3>
+        <p className="candidate-info">
+          Location: {candidate.location || "N/A"}
+        </p>
+        <p className="candidate-info">Email: {candidate.email || "N/A"}</p>
+        <p className="candidate-info">Company: {candidate.company || "N/A"}</p>
+        <p className="candidate-info">
+          Profile:{" "}
+          <a
+            href={candidate.html_url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {candidate.html_url}
+          </a>
+        </p>
+      </div>
+
+      {/* Bottom: Buttons in circles */}
+      <div className="card-actions">
+        <button className="circle-button reject" onClick={handleReject}>
+          -
+        </button>
+        <button className="circle-button accept" onClick={handleAccept}>
+          +
+        </button>
       </div>
     </div>
   );

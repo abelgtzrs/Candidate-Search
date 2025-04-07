@@ -7,4 +7,5 @@ export interface ICandidate {
   email: string | null;
   html_url: string;
   company: string | null;
+  bio: string | null;
 }
