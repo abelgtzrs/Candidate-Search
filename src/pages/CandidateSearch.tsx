@@ -41,9 +41,16 @@ const CandidateSearch = () => {
     try {
       setLoading(true);
       const data = await searchGithubUser(username);
+
+      if (!data || data.message === "Not Found") {
+        setCurrentIndex((prevIndex) => prevIndex + 1);
+        return;
+      }
+
       setCandidate(data);
     } catch (error) {
       console.error("Error fetching candidate details:", error);
+      setCurrentIndex((prevIndex) => prevIndex + 1);
     } finally {
       setLoading(false);
     }
