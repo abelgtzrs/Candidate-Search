@@ -75,7 +75,7 @@ This project is a React + TypeScript application that allows employers to browse
 
 ## Screenshot
 
-![Candidate Search](https://i.imgur.com/PSntXv3_d.webp)
+![Candidate Search](https://i.imgur.com/PSntXv3.png)
 ![Potential Candidates](https://i.imgur.com/t0O43tD.png)
 
 ## License
